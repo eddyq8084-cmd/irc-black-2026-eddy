@@ -31,17 +31,27 @@ public class Arm implements Mechanism {
    private void lift(double armSpeed) {
     armMotor.set(armSpeed);
    }
+
    private void stop() {
     armMotor.stopMotor();
    }
+}
 
-
-   public Command liftCommand(double speed) {
+public Command liftCommand(double speed) {
     return run(coroutine -> {
         lift(speed);
         coroutine.park();
     })
-    .whenExited(this::stop)
-    .named("Lift Arm");
-   }
+        .whenExited(this::stop)
+        .named("Lift Arm");
+}
+
+private final Command driveCommand = drivetrain.driveCommand(controller);
+    private final Arm arm = new Arm();
+    private final Trigger armUpButton = controller.y();
+    private final Trigger armDownButton = controller.a();
+
+private void configure Bindings() {
+    armUpbutton.wihleTrue(arm.liftCommand(speed:0.25));
+    armDownbutton.wihleTrue(arm.liftCommand(speed:-0.25));
 }

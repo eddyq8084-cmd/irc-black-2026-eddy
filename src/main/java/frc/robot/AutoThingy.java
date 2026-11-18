@@ -14,13 +14,12 @@ import frc.robot.mechanisms.Drivetrain;
 public class AutoThingy {
     private AutoThingy(){
     
-    public static Command autoCommand(Drivetrain drivetrain, Shooter shooter) {
-        return Command.requiring(drivetrain, shooter)
+    public static Command autoCommand(Drivetrain drivetrain, Arm arm) {
+        return Command.requiring(drivetrain, arm)
             .executing(coroutine -> {
-                drivetrain.drive(0.5, 0.0);
-                coroutine.delay(Seconds(2));
-                drivetrain.drive(0.0, 0.0);
+                coroutine.await(drivetrain.autoDirveCommand(0.25, 0.25).withTimeout(Seconds.of(1)));
             })
+            .named("Auto Drive");
     }
 
     }
